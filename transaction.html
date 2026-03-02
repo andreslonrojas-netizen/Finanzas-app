@@ -292,6 +292,19 @@
             };
         });
 
+        const syncAmountDisplay = () => {
+            const numValue = parseFloat(amount.replace(/,/g, ''));
+            amountDisplay.innerText = new Intl.NumberFormat('en-US', {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 2
+            }).format(numValue);
+
+            // Handle decimal rendering (if typing '.')
+            if (amount.endsWith('.')) amountDisplay.innerText += '.';
+
+            updateUI();
+        };
+
         // Numpad logic
         numpad.onclick = (e) => {
             if (e.target.tagName !== 'BUTTON') return;
@@ -301,28 +314,40 @@
                 if (amount === "0" && val !== '.') amount = val;
                 else if (amount.replace(/,/g, '').length < 10) amount += val;
             }
-
-            const numValue = parseFloat(amount);
-            amountDisplay.innerText = new Intl.NumberFormat('en-US', {
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 2
-            }).format(numValue);
-
-            updateUI();
+            syncAmountDisplay();
         };
 
         backspace.onclick = (e) => {
-            e.stopPropagation();
+            if (e) e.stopPropagation();
             if (amount.length > 1) amount = amount.slice(0, -1);
             else amount = "0";
+            syncAmountDisplay();
+        };
 
-            const numValue = parseFloat(amount);
-            amountDisplay.innerText = new Intl.NumberFormat('en-US', {
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 2
-            }).format(numValue);
+        // Physical Keyboard Support
+        window.onkeydown = (e) => {
+            const key = e.key;
 
-            updateUI();
+            // Numbers & Decimal
+            if (!isNaN(key) || key === '.' || key === ',') {
+                const val = (key === ',') ? '.' : key;
+                if (val === '.' && amount.includes('.')) return;
+                if (amount === "0" && val !== '.') amount = val;
+                else if (amount.replace(/,/g, '').length < 10) amount += val;
+                syncAmountDisplay();
+            }
+
+            // Backspace
+            if (key === 'Backspace') {
+                if (amount.length > 1) amount = amount.slice(0, -1);
+                else amount = "0";
+                syncAmountDisplay();
+            }
+
+            // Enter to Save
+            if (key === 'Enter') {
+                btnSave.click();
+            }
         };
 
 
