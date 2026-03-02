@@ -47,11 +47,11 @@
         }
 
         .neon-glow-primary {
-            text-shadow: 0 0 15px rgba(13, 242, 128, 0.5);
+            text-shadow: 0 0 15px rgba(34, 197, 94, 0.4), 0 0 30px rgba(34, 197, 94, 0.2);
         }
 
         .neon-glow-expense {
-            text-shadow: 0 0 15px rgba(255, 77, 136, 0.5);
+            text-shadow: 0 0 15px rgba(239, 68, 68, 0.4), 0 0 30px rgba(239, 68, 68, 0.2);
         }
 
         .btn-glow-primary {
@@ -62,6 +62,12 @@
         .btn-glow-expense {
             box-shadow: 0 0 20px rgba(255, 77, 136, 0.3);
             border: 1px solid rgba(255, 77, 136, 0.5);
+        }
+
+        .active-cat {
+            border-width: 2px;
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
         }
 
         ::-webkit-scrollbar {
@@ -100,16 +106,16 @@
     <!-- Main Content Area -->
     <main class="flex-1 flex flex-col justify-center px-6 relative z-10 overflow-hidden">
         <!-- Amount Display -->
-        <section class="flex flex-col items-center justify-center py-4 transition-all duration-500">
+        <section class="flex flex-col items-center justify-center py-6 transition-all duration-700">
             <div id="glow-bg"
-                class="absolute w-40 h-40 bg-primary/20 rounded-full blur-[60px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none transition-all duration-500">
+                class="absolute w-56 h-56 bg-primary/10 rounded-full blur-[80px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none transition-all duration-700">
             </div>
-            <span class="text-[10px] font-bold uppercase tracking-[0.4em] text-primary/60 mb-2">Monto Total</span>
-            <div class="text-7xl font-black text-white flex items-center gap-1 tracking-tighter tabular-nums transition-all duration-500"
+            <span class="text-[11px] font-black uppercase tracking-[0.5em] text-primary/40 mb-4">Monto Total</span>
+            <div class="text-8xl font-black text-white flex items-center gap-1 tracking-tighter tabular-nums transition-all duration-500"
                 id="amount-container">
-                <span id="currency-symbol" class="text-4xl text-primary opacity-80 mt-2">$</span>
+                <span id="currency-symbol" class="text-5xl text-primary/90 mt-4">$</span>
                 <span id="amount-display" class="neon-glow-primary">0</span>
-                <span class="text-4xl opacity-40 mt-2">.00</span>
+                <span class="text-4xl opacity-30 mt-4">.00</span>
             </div>
         </section>
         <!-- Category Selection -->
@@ -220,23 +226,23 @@
             if (isIncome) {
                 btnIngreso.className = "px-6 py-2 rounded-full text-sm font-bold bg-primary/20 text-primary neon-glow-primary border border-primary/30 transition-all";
                 btnEgreso.className = "px-6 py-2 rounded-full text-sm font-bold text-slate-500 hover:text-white transition-all";
-                currencySymbol.className = "text-4xl text-primary opacity-80 mt-2";
-                glowBg.className = "absolute w-40 h-40 bg-primary/20 rounded-full blur-[60px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none transition-all";
-                btnSave.className = "col-span-3 h-20 bg-primary rounded-3xl text-background-dark font-black text-xl uppercase tracking-[0.2em] btn-glow-primary flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-95 transition-all mt-2";
+                currencySymbol.className = "text-5xl text-primary/90 mt-4";
+                glowBg.className = "absolute w-56 h-56 bg-primary/10 rounded-full blur-[80px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none transition-all";
+                btnSave.className = "col-span-3 h-20 bg-primary rounded-3xl text-background-dark font-black text-xl uppercase tracking-[0.2em] btn-glow-primary flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-95 transition-all mt-4";
                 saveText.innerText = "Registrar Ingreso";
                 categorySection.style.display = 'none';
                 amountContainer.classList.remove('text-6xl');
-                amountContainer.classList.add('text-8xl');
+                amountContainer.classList.add('text-9xl');
             } else {
                 btnEgreso.className = "px-6 py-2 rounded-full text-sm font-bold bg-accent-red/20 text-accent-red neon-glow-expense border border-accent-red/30 transition-all";
                 btnIngreso.className = "px-6 py-2 rounded-full text-sm font-bold text-slate-500 hover:text-white transition-all";
-                currencySymbol.className = "text-4xl text-accent-red opacity-80 mt-2";
-                glowBg.className = "absolute w-40 h-40 bg-accent-red/20 rounded-full blur-[60px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none transition-all";
-                btnSave.className = "col-span-3 h-20 bg-accent-red rounded-3xl text-white font-black text-xl uppercase tracking-[0.2em] btn-glow-expense flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-95 transition-all mt-2";
+                currencySymbol.className = "text-5xl text-accent-red/90 mt-4";
+                glowBg.className = "absolute w-56 h-56 bg-accent-red/10 rounded-full blur-[80px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none transition-all";
+                btnSave.className = "col-span-3 h-20 bg-accent-red rounded-3xl text-white font-black text-xl uppercase tracking-[0.2em] btn-glow-expense flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-95 transition-all mt-4";
                 saveText.innerText = "Registrar Egreso";
                 categorySection.style.display = 'block';
-                amountContainer.classList.remove('text-8xl');
-                amountContainer.classList.add('text-6xl');
+                amountContainer.classList.remove('text-9xl');
+                amountContainer.classList.add('text-7xl');
             }
         }
 
