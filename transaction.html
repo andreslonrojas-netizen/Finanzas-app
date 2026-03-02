@@ -97,94 +97,98 @@
         </div>
     </header>
 
-    <!-- Amount Display -->
-    <section class="flex flex-col items-center justify-center py-2 relative z-10 shrink-0">
-        <div id="glow-bg"
-            class="absolute w-32 h-32 bg-primary/20 rounded-full blur-[50px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">
-        </div>
-        <span class="text-[9px] font-bold uppercase tracking-[0.3em] text-primary/80 mb-1">Monto Total</span>
-        <div class="text-6xl font-black text-white flex items-center gap-1 tracking-tighter">
-            <span id="currency-symbol" class="text-3xl text-primary opacity-80">$</span>
-            <span id="amount-display">0</span>
-            <span class="text-3xl opacity-50">.00</span>
-        </div>
-    </section>
-    <!-- Category Selection -->
-    <section id="category-section" class="mt-2 relative z-10 shrink-0">
-        <h4 class="text-[9px] font-bold tracking-[0.2em] text-primary/50 px-6 mb-2 uppercase">Select Category</h4>
-        <div class="flex overflow-x-auto gap-3 px-6 pb-2 no-scrollbar">
-            <div class="flex flex-col items-center gap-2 min-w-[64px] cursor-pointer group category-item"
-                data-category="comida">
-                <div
-                    class="size-14 rounded-full glass-panel flex items-center justify-center border-primary/50 bg-primary/20 neon-glow-primary transition-all active-cat">
-                    <span class="material-symbols-outlined text-primary text-2xl">restaurant</span>
-                </div>
-                <span class="text-[10px] font-bold text-white tracking-wide">Comida</span>
+    <!-- Main Content Area -->
+    <main class="flex-1 flex flex-col justify-center px-6 relative z-10 overflow-hidden">
+        <!-- Amount Display -->
+        <section class="flex flex-col items-center justify-center py-4 transition-all duration-500">
+            <div id="glow-bg"
+                class="absolute w-40 h-40 bg-primary/20 rounded-full blur-[60px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none transition-all duration-500">
             </div>
-            <div class="flex flex-col items-center gap-2 min-w-[64px] cursor-pointer group hover:opacity-100 opacity-60 transition-opacity category-item"
-                data-category="techo">
-                <div
-                    class="size-14 rounded-full glass-panel flex items-center justify-center group-hover:bg-white/5 transition-all">
-                    <span class="material-symbols-outlined text-white text-2xl">home</span>
-                </div>
-                <span class="text-[10px] font-medium text-white">Techo</span>
+            <span class="text-[10px] font-bold uppercase tracking-[0.4em] text-primary/60 mb-2">Monto Total</span>
+            <div class="text-7xl font-black text-white flex items-center gap-1 tracking-tighter tabular-nums transition-all duration-500"
+                id="amount-container">
+                <span id="currency-symbol" class="text-4xl text-primary opacity-80 mt-2">$</span>
+                <span id="amount-display" class="neon-glow-primary">0</span>
+                <span class="text-4xl opacity-40 mt-2">.00</span>
             </div>
-            <div class="flex flex-col items-center gap-2 min-w-[64px] cursor-pointer group hover:opacity-100 opacity-60 transition-opacity category-item"
-                data-category="bus">
-                <div
-                    class="size-14 rounded-full glass-panel flex items-center justify-center group-hover:bg-white/5 transition-all">
-                    <span class="material-symbols-outlined text-white text-2xl">directions_bus</span>
+        </section>
+        <!-- Category Selection -->
+        <section id="category-section" class="mt-8 transition-all duration-500">
+            <h4 class="text-[10px] font-bold tracking-[0.2em] text-primary/40 mb-4 uppercase text-center">Select
+                Category</h4>
+            <div class="flex justify-center gap-4 pb-2">
+                <div class="flex flex-col items-center gap-2 cursor-pointer group category-item" data-category="comida">
+                    <div
+                        class="size-16 rounded-full glass-panel flex items-center justify-center border-primary/50 bg-primary/20 neon-glow-primary transition-all active-cat">
+                        <span class="material-symbols-outlined text-primary text-3xl">restaurant</span>
+                    </div>
+                    <span class="text-[11px] font-bold text-white/90 tracking-wide">Comida</span>
                 </div>
-                <span class="text-[10px] font-medium text-white">Bus/Uber</span>
-            </div>
-            <div class="flex flex-col items-center gap-2 min-w-[64px] cursor-pointer group hover:opacity-100 opacity-60 transition-opacity category-item"
-                data-category="hormiga">
-                <div
-                    class="size-14 rounded-full glass-panel flex items-center justify-center group-hover:bg-white/5 transition-all">
-                    <span class="material-symbols-outlined text-white text-2xl">local_cafe</span>
+                <div class="flex flex-col items-center gap-2 cursor-pointer group opacity-40 transition-all category-item"
+                    data-category="techo">
+                    <div
+                        class="size-16 rounded-full glass-panel flex items-center justify-center hover:bg-white/5 transition-all">
+                        <span class="material-symbols-outlined text-white text-3xl">home</span>
+                    </div>
+                    <span class="text-[11px] font-medium text-white/70">Techo</span>
                 </div>
-                <span class="text-[10px] font-medium text-white">Hormiga</span>
+                <div class="flex flex-col items-center gap-2 cursor-pointer group opacity-40 transition-all category-item"
+                    data-category="bus">
+                    <div
+                        class="size-16 rounded-full glass-panel flex items-center justify-center hover:bg-white/5 transition-all">
+                        <span class="material-symbols-outlined text-white text-3xl">directions_bus</span>
+                    </div>
+                    <span class="text-[11px] font-medium text-white/70">Bus/Uber</span>
+                </div>
+                <div class="flex flex-col items-center gap-2 cursor-pointer group opacity-40 transition-all category-item"
+                    data-category="hormiga">
+                    <div
+                        class="size-16 rounded-full glass-panel flex items-center justify-center hover:bg-white/5 transition-all">
+                        <span class="material-symbols-outlined text-white text-3xl">local_cafe</span>
+                    </div>
+                    <span class="text-[11px] font-medium text-white/70">Hormiga</span>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
 
 
     <!-- Custom Numeric Keypad Board -->
-    <section class="flex flex-col justify-end pb-4 mt-auto shrink-0 overflow-hidden">
-        <div class="grid grid-cols-3 gap-2 px-6 relative z-10" id="numpad">
+    <section class="px-6 pb-8 relative z-10 shrink-0">
+        <div class="grid grid-cols-3 gap-4" id="numpad">
             <button
-                class="h-[56px] text-2xl font-light text-white glass-panel flex items-center justify-center rounded-xl transition-all active:scale-95 hover:bg-white/5">1</button>
+                class="aspect-[1.5/1] text-3xl font-light text-white glass-panel flex items-center justify-center rounded-2xl transition-all active:scale-90 hover:bg-white/5">1</button>
             <button
-                class="h-[56px] text-2xl font-light text-white glass-panel flex items-center justify-center rounded-xl transition-all active:scale-95 hover:bg-white/5">2</button>
+                class="aspect-[1.5/1] text-3xl font-light text-white glass-panel flex items-center justify-center rounded-2xl transition-all active:scale-90 hover:bg-white/5">2</button>
             <button
-                class="h-[56px] text-2xl font-light text-white glass-panel flex items-center justify-center rounded-xl transition-all active:scale-95 hover:bg-white/5">3</button>
+                class="aspect-[1.5/1] text-3xl font-light text-white glass-panel flex items-center justify-center rounded-2xl transition-all active:scale-90 hover:bg-white/5">3</button>
             <button
-                class="h-[56px] text-2xl font-light text-white glass-panel flex items-center justify-center rounded-xl transition-all active:scale-95 hover:bg-white/5">4</button>
+                class="aspect-[1.5/1] text-3xl font-light text-white glass-panel flex items-center justify-center rounded-2xl transition-all active:scale-90 hover:bg-white/5">4</button>
             <button
-                class="h-[56px] text-2xl font-light text-white glass-panel flex items-center justify-center rounded-xl transition-all active:scale-95 hover:bg-white/5">5</button>
+                class="aspect-[1.5/1] text-3xl font-light text-white glass-panel flex items-center justify-center rounded-2xl transition-all active:scale-90 hover:bg-white/5">5</button>
             <button
-                class="h-[56px] text-2xl font-light text-white glass-panel flex items-center justify-center rounded-xl transition-all active:scale-95 hover:bg-white/5">6</button>
+                class="aspect-[1.5/1] text-3xl font-light text-white glass-panel flex items-center justify-center rounded-2xl transition-all active:scale-90 hover:bg-white/5">6</button>
             <button
-                class="h-[56px] text-2xl font-light text-white glass-panel flex items-center justify-center rounded-xl transition-all active:scale-95 hover:bg-white/5">7</button>
+                class="aspect-[1.5/1] text-3xl font-light text-white glass-panel flex items-center justify-center rounded-2xl transition-all active:scale-90 hover:bg-white/5">7</button>
             <button
-                class="h-[56px] text-2xl font-light text-white glass-panel flex items-center justify-center rounded-xl transition-all active:scale-95 hover:bg-white/5">8</button>
+                class="aspect-[1.5/1] text-3xl font-light text-white glass-panel flex items-center justify-center rounded-2xl transition-all active:scale-90 hover:bg-white/5">8</button>
             <button
-                class="h-[56px] text-2xl font-light text-white glass-panel flex items-center justify-center rounded-xl transition-all active:scale-95 hover:bg-white/5">9</button>
+                class="aspect-[1.5/1] text-3xl font-light text-white glass-panel flex items-center justify-center rounded-2xl transition-all active:scale-90 hover:bg-white/5">9</button>
             <button
-                class="h-[56px] text-2xl font-light text-primary/80 glass-panel flex items-center justify-center rounded-xl transition-all active:scale-95 hover:bg-white/5">.</button>
+                class="aspect-[1.5/1] text-3xl font-light text-primary/80 glass-panel flex items-center justify-center rounded-2xl transition-all active:scale-90 hover:bg-white/5">.</button>
             <button
-                class="h-[56px] text-2xl font-light text-white glass-panel flex items-center justify-center rounded-xl transition-all active:scale-95 hover:bg-white/5">0</button>
+                class="aspect-[1.5/1] text-3xl font-light text-white glass-panel flex items-center justify-center rounded-2xl transition-all active:scale-90 hover:bg-white/5">0</button>
             <button id="btn-backspace"
-                class="h-[56px] flex items-center justify-center text-primary/80 glass-panel rounded-xl transition-all active:scale-95 hover:bg-white/5">
-                <span class="material-symbols-outlined text-2xl">backspace</span>
+                class="aspect-[1.5/1] flex items-center justify-center text-primary/80 glass-panel rounded-2xl transition-all active:scale-90 hover:bg-white/5">
+                <span class="material-symbols-outlined text-3xl">backspace</span>
             </button>
 
             <!-- Save Button Integrated into the Board -->
             <button id="btn-save"
-                class="col-span-3 h-[64px] bg-primary rounded-xl text-background-dark font-black text-sm uppercase tracking-widest btn-glow-primary flex items-center justify-center gap-2 hover:bg-primary/90 transition-all active:scale-95 mt-1">
+                class="col-span-3 h-20 bg-primary rounded-3xl text-background-dark font-black text-xl uppercase tracking-[0.2em] btn-glow-primary flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-95 transition-all mt-2">
                 <span id="save-text">Registrar Ingreso</span>
-                <span class="material-symbols-outlined font-bold text-lg">check_circle</span>
+                <span class="material-symbols-outlined font-bold text-2xl">check_circle</span>
             </button>
         </div>
     </section>
@@ -209,24 +213,30 @@
         const categorySection = document.getElementById('category-section');
         const categoryItems = document.querySelectorAll('.category-item');
 
+        const amountContainer = document.getElementById('amount-container');
+
         // Logic - UI update
         function updateUI() {
             if (isIncome) {
                 btnIngreso.className = "px-6 py-2 rounded-full text-sm font-bold bg-primary/20 text-primary neon-glow-primary border border-primary/30 transition-all";
                 btnEgreso.className = "px-6 py-2 rounded-full text-sm font-bold text-slate-500 hover:text-white transition-all";
-                currencySymbol.className = "text-4xl text-primary opacity-80";
+                currencySymbol.className = "text-4xl text-primary opacity-80 mt-2";
                 glowBg.className = "absolute w-40 h-40 bg-primary/20 rounded-full blur-[60px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none transition-all";
-                btnSave.className = "col-span-3 h-[64px] bg-primary rounded-xl text-background-dark font-black text-sm uppercase tracking-widest btn-glow-primary flex items-center justify-center gap-2 hover:bg-primary/90 transition-all active:scale-95 mt-1";
+                btnSave.className = "col-span-3 h-20 bg-primary rounded-3xl text-background-dark font-black text-xl uppercase tracking-[0.2em] btn-glow-primary flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-95 transition-all mt-2";
                 saveText.innerText = "Registrar Ingreso";
                 categorySection.style.display = 'none';
+                amountContainer.classList.remove('text-6xl');
+                amountContainer.classList.add('text-8xl');
             } else {
                 btnEgreso.className = "px-6 py-2 rounded-full text-sm font-bold bg-accent-red/20 text-accent-red neon-glow-expense border border-accent-red/30 transition-all";
                 btnIngreso.className = "px-6 py-2 rounded-full text-sm font-bold text-slate-500 hover:text-white transition-all";
-                currencySymbol.className = "text-4xl text-accent-red opacity-80";
+                currencySymbol.className = "text-4xl text-accent-red opacity-80 mt-2";
                 glowBg.className = "absolute w-40 h-40 bg-accent-red/20 rounded-full blur-[60px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none transition-all";
-                btnSave.className = "col-span-3 h-[64px] bg-accent-red rounded-xl text-white font-black text-sm uppercase tracking-widest btn-glow-expense flex items-center justify-center gap-2 hover:bg-accent-red/90 transition-all active:scale-95 mt-1";
+                btnSave.className = "col-span-3 h-20 bg-accent-red rounded-3xl text-white font-black text-xl uppercase tracking-[0.2em] btn-glow-expense flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-95 transition-all mt-2";
                 saveText.innerText = "Registrar Egreso";
                 categorySection.style.display = 'block';
+                amountContainer.classList.remove('text-8xl');
+                amountContainer.classList.add('text-6xl');
             }
         }
 
