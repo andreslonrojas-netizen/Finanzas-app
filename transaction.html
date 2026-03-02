@@ -110,7 +110,7 @@
         </div>
     </section>
     <!-- Category Selection -->
-    <section class="mt-2 relative z-10 shrink-0">
+    <section id="category-section" class="mt-2 relative z-10 shrink-0">
         <h4 class="text-[9px] font-bold tracking-[0.2em] text-primary/50 px-6 mb-2 uppercase">Select Category</h4>
         <div class="flex overflow-x-auto gap-3 px-6 pb-2 no-scrollbar">
             <div class="flex flex-col items-center gap-2 min-w-[64px] cursor-pointer group category-item"
@@ -151,7 +151,7 @@
 
 
     <!-- Custom Numeric Keypad Board -->
-    <section class="flex-1 flex flex-col justify-end pb-4 shrink-0 overflow-hidden">
+    <section class="flex flex-col justify-end pb-4 mt-auto shrink-0 overflow-hidden">
         <div class="grid grid-cols-3 gap-2 px-6 relative z-10" id="numpad">
             <button
                 class="h-[56px] text-2xl font-light text-white glass-panel flex items-center justify-center rounded-xl transition-all active:scale-95 hover:bg-white/5">1</button>
@@ -206,6 +206,7 @@
         const saveText = document.getElementById('save-text');
         const numpad = document.getElementById('numpad');
         const backspace = document.getElementById('btn-backspace');
+        const categorySection = document.getElementById('category-section');
         const categoryItems = document.querySelectorAll('.category-item');
 
         // Logic - UI update
@@ -217,6 +218,7 @@
                 glowBg.className = "absolute w-40 h-40 bg-primary/20 rounded-full blur-[60px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none transition-all";
                 btnSave.className = "col-span-3 h-[64px] bg-primary rounded-xl text-background-dark font-black text-sm uppercase tracking-widest btn-glow-primary flex items-center justify-center gap-2 hover:bg-primary/90 transition-all active:scale-95 mt-1";
                 saveText.innerText = "Registrar Ingreso";
+                categorySection.style.display = 'none';
             } else {
                 btnEgreso.className = "px-6 py-2 rounded-full text-sm font-bold bg-accent-red/20 text-accent-red neon-glow-expense border border-accent-red/30 transition-all";
                 btnIngreso.className = "px-6 py-2 rounded-full text-sm font-bold text-slate-500 hover:text-white transition-all";
@@ -224,8 +226,12 @@
                 glowBg.className = "absolute w-40 h-40 bg-accent-red/20 rounded-full blur-[60px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none transition-all";
                 btnSave.className = "col-span-3 h-[64px] bg-accent-red rounded-xl text-white font-black text-sm uppercase tracking-widest btn-glow-expense flex items-center justify-center gap-2 hover:bg-accent-red/90 transition-all active:scale-95 mt-1";
                 saveText.innerText = "Registrar Egreso";
+                categorySection.style.display = 'block';
             }
         }
+
+        // Initial call to hide categories if starting as income
+        updateUI();
 
         btnIngreso.onclick = () => { isIncome = true; updateUI(); };
         btnEgreso.onclick = () => { isIncome = false; updateUI(); };
