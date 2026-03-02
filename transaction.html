@@ -232,13 +232,8 @@
                 saveText.innerText = "Registrar Ingreso";
                 categorySection.style.display = 'none';
 
-                // Ultra-Aggressive dynamic scaling for Income
-                amountContainer.className = "w-full max-w-[90vw] mx-auto px-2 font-black text-white flex items-center justify-center gap-3 tracking-tighter tabular-nums transition-all duration-300 overflow-hidden";
-                if (len <= 3) amountContainer.classList.add('text-9xl');
-                else if (len <= 5) amountContainer.classList.add('text-7xl');
-                else if (len <= 7) amountContainer.classList.add('text-4xl');
-                else if (len <= 9) amountContainer.classList.add('text-3xl');
-                else amountContainer.classList.add('text-2xl');
+                // Fixed font size for Income - ADJUST MANUALLY HERE (e.g., text-5xl, text-7xl, text-9xl)
+                amountContainer.className = "w-full max-w-[90vw] mx-auto px-2 font-black text-white flex items-center justify-center gap-3 tracking-tighter tabular-nums transition-all duration-300 overflow-hidden text-6xl";
 
             } else {
                 btnEgreso.className = "px-6 py-2 rounded-full text-sm font-bold bg-accent-red/20 text-accent-red neon-glow-expense border border-accent-red/30 transition-all";
@@ -249,12 +244,8 @@
                 saveText.innerText = "Registrar Egreso";
                 categorySection.style.display = 'block';
 
-                // Ultra-Aggressive dynamic scaling for Expense
-                amountContainer.className = "w-full max-w-[90vw] mx-auto px-2 font-black text-white flex items-center justify-center gap-3 tracking-tighter tabular-nums transition-all duration-300 overflow-hidden";
-                if (len <= 3) amountContainer.classList.add('text-7xl');
-                else if (len <= 5) amountContainer.classList.add('text-5xl');
-                else if (len <= 7) amountContainer.classList.add('text-3xl');
-                else amountContainer.classList.add('text-2xl');
+                // Fixed font size for Expense - ADJUST MANUALLY HERE (e.g., text-4xl, text-5xl, text-6xl)
+                amountContainer.className = "w-full max-w-[90vw] mx-auto px-2 font-black text-white flex items-center justify-center gap-3 tracking-tighter tabular-nums transition-all duration-300 overflow-hidden text-5xl";
             }
         }
 
