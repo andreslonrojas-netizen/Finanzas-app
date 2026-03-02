@@ -147,15 +147,7 @@
             </div>
         </div>
     </section>
-    <!-- Notes Input -->
-    <section class="px-6 py-2">
-        <label for="transaction-note" class="sr-only">Add a note</label>
-        <div class="relative">
-            <input id="transaction-note"
-                class="w-full bg-transparent border-0 border-b border-white/10 focus:ring-0 focus:border-primary py-3 text-sm placeholder:text-slate-500 text-white transition-colors"
-                placeholder="Add a note..." type="text" />
-        </div>
-    </section>
+
 
 
     <!-- Custom Numeric Keypad Board -->
@@ -215,7 +207,6 @@
         const numpad = document.getElementById('numpad');
         const backspace = document.getElementById('btn-backspace');
         const categoryItems = document.querySelectorAll('.category-item');
-        const noteInput = document.getElementById('transaction-note');
 
         // Logic - UI update
         function updateUI() {
@@ -307,7 +298,6 @@
                 amount: numAmount,
                 type: isIncome ? 'income' : 'expense',
                 category: activeCategory,
-                note: noteInput.value || "",
                 date: new Date().toISOString()
             };
 
