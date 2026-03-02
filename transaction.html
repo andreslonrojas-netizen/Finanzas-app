@@ -111,11 +111,10 @@
                 class="absolute w-56 h-56 bg-primary/10 rounded-full blur-[80px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none transition-all duration-700">
             </div>
             <span class="text-[11px] font-black uppercase tracking-[0.5em] text-primary/40 mb-4">Monto Total</span>
-            <div class="text-8xl font-black text-white flex items-center gap-1 tracking-tighter tabular-nums transition-all duration-500"
+            <div class="w-full px-2 text-8xl font-black text-white flex items-center justify-center gap-3 tracking-tighter tabular-nums transition-all duration-500 overflow-hidden"
                 id="amount-container">
-                <span id="currency-symbol" class="text-5xl text-primary/90 mt-4">$</span>
-                <span id="amount-display" class="neon-glow-primary">0</span>
-                <span class="text-4xl opacity-30 mt-4">.00</span>
+                <span id="currency-symbol" class="text-5xl text-primary/90 mt-4 shrink-0">$</span>
+                <span id="amount-display" class="neon-glow-primary truncate">0</span>
             </div>
         </section>
         <!-- Category Selection -->
@@ -223,6 +222,7 @@
 
         // Logic - UI update
         function updateUI() {
+            const len = amount.replace(/,/g, '').split('.')[0].length; // Measure integer part
             if (isIncome) {
                 btnIngreso.className = "px-6 py-2 rounded-full text-sm font-bold bg-primary/20 text-primary neon-glow-primary border border-primary/30 transition-all";
                 btnEgreso.className = "px-6 py-2 rounded-full text-sm font-bold text-slate-500 hover:text-white transition-all";
@@ -231,8 +231,15 @@
                 btnSave.className = "col-span-3 h-20 bg-primary rounded-3xl text-background-dark font-black text-xl uppercase tracking-[0.2em] btn-glow-primary flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-95 transition-all mt-4";
                 saveText.innerText = "Registrar Ingreso";
                 categorySection.style.display = 'none';
-                amountContainer.classList.remove('text-6xl');
-                amountContainer.classList.add('text-9xl');
+
+                // Ultra-Aggressive dynamic scaling for Income
+                amountContainer.className = "w-full max-w-[90vw] mx-auto px-2 font-black text-white flex items-center justify-center gap-3 tracking-tighter tabular-nums transition-all duration-300 overflow-hidden";
+                if (len <= 3) amountContainer.classList.add('text-9xl');
+                else if (len <= 5) amountContainer.classList.add('text-7xl');
+                else if (len <= 7) amountContainer.classList.add('text-4xl');
+                else if (len <= 9) amountContainer.classList.add('text-3xl');
+                else amountContainer.classList.add('text-2xl');
+
             } else {
                 btnEgreso.className = "px-6 py-2 rounded-full text-sm font-bold bg-accent-red/20 text-accent-red neon-glow-expense border border-accent-red/30 transition-all";
                 btnIngreso.className = "px-6 py-2 rounded-full text-sm font-bold text-slate-500 hover:text-white transition-all";
@@ -241,8 +248,13 @@
                 btnSave.className = "col-span-3 h-20 bg-accent-red rounded-3xl text-white font-black text-xl uppercase tracking-[0.2em] btn-glow-expense flex items-center justify-center gap-3 hover:scale-[1.02] active:scale-95 transition-all mt-4";
                 saveText.innerText = "Registrar Egreso";
                 categorySection.style.display = 'block';
-                amountContainer.classList.remove('text-9xl');
-                amountContainer.classList.add('text-7xl');
+
+                // Ultra-Aggressive dynamic scaling for Expense
+                amountContainer.className = "w-full max-w-[90vw] mx-auto px-2 font-black text-white flex items-center justify-center gap-3 tracking-tighter tabular-nums transition-all duration-300 overflow-hidden";
+                if (len <= 3) amountContainer.classList.add('text-7xl');
+                else if (len <= 5) amountContainer.classList.add('text-5xl');
+                else if (len <= 7) amountContainer.classList.add('text-3xl');
+                else amountContainer.classList.add('text-2xl');
             }
         }
 
@@ -293,18 +305,33 @@
         numpad.onclick = (e) => {
             if (e.target.tagName !== 'BUTTON') return;
             const val = e.target.innerText;
-            if (val && val.length === 1 && !isNaN(val)) {
-                if (amount === "0") amount = val;
-                else if (amount.length < 9) amount += val;
-                amountDisplay.innerText = new Intl.NumberFormat('en-US').format(amount);
+            if ((val && val.length === 1 && !isNaN(val)) || val === '.') {
+                if (val === '.' && amount.includes('.')) return;
+                if (amount === "0" && val !== '.') amount = val;
+                else if (amount.replace(/,/g, '').length < 10) amount += val;
             }
+
+            const numValue = parseFloat(amount);
+            amountDisplay.innerText = new Intl.NumberFormat('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }).format(numValue);
+
+            updateUI();
         };
 
         backspace.onclick = (e) => {
             e.stopPropagation();
-            amount = amount.slice(0, -1);
-            if (amount === "") amount = "0";
-            amountDisplay.innerText = new Intl.NumberFormat('en-US').format(amount);
+            if (amount.length > 1) amount = amount.slice(0, -1);
+            else amount = "0";
+
+            const numValue = parseFloat(amount);
+            amountDisplay.innerText = new Intl.NumberFormat('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }).format(numValue);
+
+            updateUI();
         };
 
 
