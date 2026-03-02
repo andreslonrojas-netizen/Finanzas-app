@@ -6,9 +6,9 @@ const SUPABASE_URL = 'https://idvzqutyekazfgswqguz.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_idHxReuJlcjI7XUDCBRYzg_UdrQXPio';
 
 // Cargamos el cliente de Supabase (se asume que el script de CDN está en el HTML)
-let supabase = null;
-if (typeof supabase === 'undefined' && window.supabase) {
-    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+let supabaseClient = null;
+if (window.supabase) {
+    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 }
 
 const DB_NAME = 'FinanzasAppDB';
@@ -83,7 +83,7 @@ class LocalDB {
     // --- LÓGICA DE SINCRONIZACIÓN ---
 
     async syncOne(id) {
-        if (!supabase || SUPABASE_URL === 'TU_SUPABASE_URL') return;
+        if (!supabaseClient || SUPABASE_URL === 'TU_SUPABASE_URL') return;
 
         const transaction_db = this.db.transaction([STORE_NAME], 'readonly');
         const store = transaction_db.objectStore(STORE_NAME);
@@ -98,7 +98,7 @@ class LocalDB {
             // Preparamos objeto para Supabase (quitamos ID local si queremos que Supabase genere uno o manejamos el mapeo)
             const { id: localId, synced, ...supabaseData } = data;
 
-            const { error } = await supabase
+            const { error } = await supabaseClient
                 .from('transactions')
                 .insert([supabaseData]);
 
@@ -126,7 +126,7 @@ class LocalDB {
     }
 
     async fullSync() {
-        if (!supabase || SUPABASE_URL === 'TU_SUPABASE_URL') return;
+        if (!supabaseClient || SUPABASE_URL === 'TU_SUPABASE_URL') return;
 
         const txs = await this.getAllTransactions();
         const pending = txs.filter(t => !t.synced);
