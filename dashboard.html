@@ -174,67 +174,8 @@
                     <span class="material-symbols-outlined">tune</span>
                 </button>
             </div>
-            <div class="space-y-4">
-                <!-- Transaction Item -->
-                <div class="flex items-center gap-4 group">
-                    <div
-                        class="size-12 rounded-xl bg-card-dark border border-primary/5 flex items-center justify-center group-active:scale-95 transition-transform">
-                        <span class="material-symbols-outlined text-primary">shopping_bag</span>
-                    </div>
-                    <div class="flex-1">
-                        <p class="text-sm font-bold text-slate-100">Apple Store</p>
-                        <p class="text-xs text-slate-500">Oct 24, 2023</p>
-                    </div>
-                    <div class="text-right">
-                        <p class="text-sm font-bold text-slate-100">-$999.00</p>
-                        <p class="text-[10px] text-slate-500 uppercase">Gadgets</p>
-                    </div>
-                </div>
-                <!-- Transaction Item -->
-                <div class="flex items-center gap-4 group">
-                    <div
-                        class="size-12 rounded-xl bg-card-dark border border-primary/5 flex items-center justify-center group-active:scale-95 transition-transform">
-                        <span class="material-symbols-outlined text-primary">payments</span>
-                    </div>
-                    <div class="flex-1">
-                        <p class="text-sm font-bold text-slate-100">Salary Deposit</p>
-                        <p class="text-xs text-slate-500">Oct 23, 2023</p>
-                    </div>
-                    <div class="text-right">
-                        <p class="text-sm font-bold text-primary">+$4,500.00</p>
-                        <p class="text-[10px] text-slate-500 uppercase">Income</p>
-                    </div>
-                </div>
-                <!-- Transaction Item -->
-                <div class="flex items-center gap-4 group">
-                    <div
-                        class="size-12 rounded-xl bg-card-dark border border-primary/5 flex items-center justify-center group-active:scale-95 transition-transform">
-                        <span class="material-symbols-outlined text-primary">restaurant</span>
-                    </div>
-                    <div class="flex-1">
-                        <p class="text-sm font-bold text-slate-100">Starbucks Coffee</p>
-                        <p class="text-xs text-slate-500">Oct 22, 2023</p>
-                    </div>
-                    <div class="text-right">
-                        <p class="text-sm font-bold text-slate-100">-$12.50</p>
-                        <p class="text-[10px] text-slate-500 uppercase">Food</p>
-                    </div>
-                </div>
-                <!-- Transaction Item -->
-                <div class="flex items-center gap-4 group">
-                    <div
-                        class="size-12 rounded-xl bg-card-dark border border-primary/5 flex items-center justify-center group-active:scale-95 transition-transform">
-                        <span class="material-symbols-outlined text-primary">fitness_center</span>
-                    </div>
-                    <div class="flex-1">
-                        <p class="text-sm font-bold text-slate-100">Equinox Gym</p>
-                        <p class="text-xs text-slate-500">Oct 20, 2023</p>
-                    </div>
-                    <div class="text-right">
-                        <p class="text-sm font-bold text-slate-100">-$180.00</p>
-                        <p class="text-[10px] text-slate-500 uppercase">Health</p>
-                    </div>
-                </div>
+            <div id="recent-transactions-list" class="space-y-4">
+                <div class="text-center text-slate-500 text-sm py-4">Cargando transacciones...</div>
             </div>
         </div>
         <!-- Bottom Navigation Bar -->
@@ -327,6 +268,56 @@
                 document.getElementById('hormiga-value').innerText = hormigaPct;
                 const hormigaBarWidth = Math.min((hormigaPct / 10) * 100, 100); // 10% is the limit visually scaled
                 document.getElementById('hormiga-bar').style.width = `${hormigaBarWidth}%`;
+
+                // Render Recent Transactions
+                const recentList = document.getElementById('recent-transactions-list');
+                recentList.innerHTML = '';
+
+                if (txs.length === 0) {
+                    recentList.innerHTML = '<div class="text-center text-slate-500 text-sm py-4">No hay transacciones aún.</div>';
+                } else {
+                    // Sort by date descending and take top 10
+                    const sortedTxs = txs.sort((a, b) => new Date(b.date) - new Date(a.date)).slice(0, 10);
+
+                    const iconMap = {
+                        'comida': 'restaurant',
+                        'transporte': 'directions_car',
+                        'entradas': 'payments',
+                        'servicios': 'home',
+                        'compras': 'shopping_bag',
+                        'salud': 'fitness_center',
+                        'hormiga': 'local_cafe'
+                    };
+
+                    sortedTxs.forEach(t => {
+                        const isIncome = t.type === 'income';
+                        const icon = isIncome ? 'payments' : (iconMap[t.category] || 'attach_money');
+                        const amountColor = isIncome ? 'text-primary' : 'text-slate-100';
+                        const sign = isIncome ? '+' : '-';
+                        const formattedAmt = new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(t.amount);
+                        const dateObj = new Date(t.date);
+                        const dateStr = dateObj.toLocaleDateString('es-ES', { month: 'short', day: 'numeric', year: 'numeric' });
+                        // Simple capitalization for category
+                        const catDisplay = t.category ? t.category.charAt(0).toUpperCase() + t.category.slice(1) : (isIncome ? 'Ingreso' : 'Egreso');
+
+                        const txHTML = `
+                            <div class="flex items-center gap-4 group">
+                                <div class="size-12 rounded-xl bg-card-dark border ${isIncome ? 'border-primary/20' : 'border-accent-red/10'} flex items-center justify-center transition-transform">
+                                    <span class="material-symbols-outlined ${isIncome ? 'text-primary' : 'text-accent-red'}">${icon}</span>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-sm font-bold text-slate-100">${catDisplay}</p>
+                                    <p class="text-xs text-slate-500">${dateStr}</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-sm font-bold ${amountColor}">${sign}$${formattedAmt}</p>
+                                    <p class="text-[10px] text-slate-500 uppercase">${isIncome ? 'Ingreso' : 'Egreso'}</p>
+                                </div>
+                            </div>
+                        `;
+                        recentList.innerHTML += txHTML;
+                    });
+                }
 
             } catch (e) {
                 console.error("Error loading dashboard data:", e);
