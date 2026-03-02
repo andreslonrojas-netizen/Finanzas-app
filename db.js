@@ -7,8 +7,12 @@ const SUPABASE_ANON_KEY = 'sb_publishable_idHxReuJlcjI7XUDCBRYzg_UdrQXPio';
 
 // Cargamos el cliente de Supabase (se asume que el script de CDN está en el HTML)
 let supabaseClient = null;
-if (window.supabase) {
-    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+try {
+    if (window.supabase) {
+        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    }
+} catch (e) {
+    console.error("Error inicializando Supabase:", e);
 }
 
 const DB_NAME = 'FinanzasAppDB';
