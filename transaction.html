@@ -157,16 +157,7 @@
         </div>
     </section>
 
-    <!-- Nequi Auto-Fill -->
-    <section class="px-6 py-1 shrink-0">
-        <h4 class="text-[8px] font-bold tracking-[0.2em] text-[#da0081] mb-1 uppercase flex items-center gap-1">
-            <span class="material-symbols-outlined text-[10px]">content_paste_go</span>
-            Nequi Quick Paste
-        </h4>
-        <textarea id="nequi-paste" rows="1"
-            class="w-full bg-card-dark rounded-xl border border-white/5 px-3 py-2 text-[10px] placeholder:text-slate-500 text-slate-300 focus:border-[#da0081]/50 focus:ring-0 transition-colors"
-            placeholder="Pega el mensaje o notificación de Nequi..."></textarea>
-    </section>
+
     <!-- Custom Numeric Keypad Board -->
     <section class="flex-1 flex flex-col justify-end pb-4 shrink-0 overflow-hidden">
         <div class="grid grid-cols-3 gap-2 px-6 relative z-10" id="numpad">
@@ -225,7 +216,6 @@
         const backspace = document.getElementById('btn-backspace');
         const categoryItems = document.querySelectorAll('.category-item');
         const noteInput = document.getElementById('transaction-note');
-        const nequiPaste = document.getElementById('nequi-paste');
 
         // Logic - UI update
         function updateUI() {
@@ -304,30 +294,6 @@
             amountDisplay.innerText = new Intl.NumberFormat('en-US').format(amount);
         };
 
-        // Nequi Quick Paste logic
-        nequiPaste.addEventListener('input', (e) => {
-            const text = e.target.value;
-            // Simplified Regex to extract values like "$50,000" or "$150.00"
-            const amountMatch = text.match(/\$?([\d,\.]+)/);
-            if (amountMatch) {
-                let parsedNum = amountMatch[1].replace(/,/g, '');
-                // Handle Nequi dot vs localized, mostly Nequi is integer for COP '15000'
-                amount = Math.floor(parseFloat(parsedNum)).toString();
-                if (isNaN(amount)) amount = "0";
-                amountDisplay.innerText = new Intl.NumberFormat('en-US').format(amount);
-            }
-
-            // Keyword detection for categories
-            const lowerText = text.toLowerCase();
-            isIncome = lowerText.includes('recibiste') || lowerText.includes('te envió');
-            updateUI();
-
-            if (lowerText.includes('comida') || lowerText.includes('restaurante')) categoryItems[0].click();
-            else if (lowerText.includes('uber') || lowerText.includes('transporte') || lowerText.includes('pasaje')) categoryItems[2].click();
-            else if (lowerText.includes('tinto') || lowerText.includes('snack') || lowerText.includes('antojo')) categoryItems[3].click();
-
-            noteInput.value = text.substring(0, 40) + "..."; // Auto description
-        });
 
         // Save logic
         btnSave.onclick = async () => {
@@ -341,8 +307,7 @@
                 amount: numAmount,
                 type: isIncome ? 'income' : 'expense',
                 category: activeCategory,
-                note: noteInput.value || (nequiPaste.value ? "Importado de Nequi" : ""),
-                rawText: nequiPaste.value, // Save raw text for analysis later if needed
+                note: noteInput.value || "",
                 date: new Date().toISOString()
             };
 
